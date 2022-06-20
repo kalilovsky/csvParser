@@ -43,11 +43,11 @@ class DataParser{
                 break;
             case 'date' :
                 if(!preg_match('([12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]))',$data)){
-                    throw new Exception('Date à la ligne ' . $this->currentLineInFile . ' n\'est pas conforme au format YYYY/MM/DD');
+                    $this->throwEx('Date à la ligne ' . $this->currentLineInFile . ' n\'est pas conforme au format YYYY/MM/DD');
                 }
                 break;
             default:
-                throw new Exception('Type de données non reconnu à la ligne ' . $this->currentLineInFile . PHP_EOL);
+                $this->throwEx('Type de données non reconnu à la ligne ' . $this->currentLineInFile );
                 break;
         }
         return $data;
@@ -65,14 +65,14 @@ class DataParser{
 
     private function createCsvFile():void{
         if(!$this->csvFileDataContext = fopen($this->destinationPath,'w')){
-            throw new Exception('Erreur survenue lors de la création du fichier CSV.' . PHP_EOL);
+            $this->throwEx('Erreur survenue lors de la création du fichier CSV.');
         }
         echo('Fichier CSV crée avec succées' . PHP_EOL);
     }
 
     private function openRawDataFile():void{
         if(!$this->fileRawDataContext = fopen($this->sourcePath, "r")){
-            throw new Exception('Erreur survenue lors du chargement des données brutes.' . PHP_EOL);
+            $this->throwEx('Erreur survenue lors du chargement des données brutes.');
         }
         echo('Fichier de données brute chargé avec succées.' . PHP_EOL);
     }
@@ -82,20 +82,27 @@ class DataParser{
             $this->dataByLine = fgets($this->fileRawDataContext);
 
             if(strlen($this->dataByLine) < $this->metaData->getStrLenByLine()) 
-            throw new Exception('Ligne vide détéctée à la ligne ' . $this->currentLineInFile . PHP_EOL);
+            $this->throwEx('Données non conformes détéctée à la ligne ' . $this->currentLineInFile);
             $data =[];
             for($i =0 ; $i < $this->metaDataColumnCount ; $i++){
                 $dataTemp = substr($this->dataByLine,0,$this->metaDataArray[$i]['columnLength']);
                 $data[] = $this->checkData($dataTemp,$this->metaDataArray[$i]);
                 $this->dataByLine = substr($this->dataByLine,$this->metaDataArray[$i]['columnLength']);
             }
+            if(strlen($this->dataByLine)>1){
+               $this->throwEx('Ligne n°' . $this->currentLineInFile . ' non conforme à ce qui est attendue.');
+            }
             fputcsv($this->csvFileDataContext,$data,',');
             $this->currentLineInFile ++;
         }
     }
 
-    public function closeContextFile():void{
+    private function closeContextFile():void{
         fclose($this->fileRawDataContext);
         fclose($this->csvFileDataContext);
+    }
+    
+    private function throwEx(string $message):void{
+        throw new Exception($message.PHP_EOL);
     }
 }   

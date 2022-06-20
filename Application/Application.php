@@ -1,6 +1,5 @@
 <?php
 
-use Exception;
 use Classe\DataParser;
 use Classe\MetaDataParser;
 
