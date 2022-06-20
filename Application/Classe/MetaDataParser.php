@@ -2,8 +2,11 @@
 
 namespace Classe;
 
+use Exception;
+
 class MetaDataParser{
     private $metaData = [];
+    private $strLenByLine = 0;
     /**
      * Mutateur de la propriéte meta qui fait référence à la structure des données souhaitée
      *
@@ -35,12 +38,25 @@ class MetaDataParser{
     }
 
     public function parseMetaDataFromFile(string $path) : void{
-        if (($handle = fopen($path, "r", true)) !== FALSE) {
-            while (($data = fgetcsv($handle, 0, ",")) !== FALSE) {
-                $this->setMetaData($data);
+        if(file_exists($path)){
+            if (($handle = fopen($path, "r", true)) !== FALSE) {
+                while (($data = fgetcsv($handle, 0, ",")) !== FALSE) {
+                    $this->setMetaData($data);
+                    $this->strLenByLine += (int) $data[1];
+                }
+                fclose($handle);
+                echo 'Données de métadonnées chargées avec succées.' . PHP_EOL;
+            } else {
+                throw new Exception('Une érreur est survenue lors de l\'ouverture du fichier de métadonnées.' . PHP_EOL);
             }
-            fclose($handle);
+        }else{
+            throw new Exception('Le fichier situé "'.$path.' n\'existe pas, veuillez relancer l\'application en introduisant le bon chemin pour le ficher de métadonnées.');
         }
     }
+
+    public function getStrLenByLine():int{
+        return $this->strLenByLine;
+    }
+
 
 }
