@@ -22,12 +22,12 @@ class Application
         $rawDataFilePath = readline();
         echo "Veuillez entrer le chemin ou vous voulez enregistrez le fichier CSV de sortie..." . PHP_EOL;
         $csvFilePath = readline();
-        // /home/khalil/portfolio/Projet_13/Octo/fffc/Test/data2/meta.csv
-        // /home/khalil/portfolio/Projet_13/Octo/fffc/Test/data2/data.txt
-        // /home/khalil/portfolio/Projet_13/Octo/fffc/Test/data2/data.csv
+        $metaDataFilePath = '/home/khalil/portfolio/Projet_13/Octo/fffc/Test/data1/meta.csv';
+        $rawDataFilePath = '/home/khalil/portfolio/Projet_13/Octo/fffc/Test/data1/data.txt';
+        $csvFilePath = '/home/khalil/portfolio/Projet_13/Octo/fffc/Test/data1/data.csv';
 
-        // https://khalil.alwaysdata.net/ressources/meta.csv
-        // https://khalil.alwaysdata.net/ressources/data.txt
+        // $metaDataFilePath = 'https://khalil.alwaysdata.net/ressources/meta.csv';
+        // $rawDataFilePath='https://khalil.alwaysdata.net/ressources/dat2a.txt';
         try{
             $metaData = new MetaDataParser();
             $metaData->parseMetaDataFromFile($metaDataFilePath);

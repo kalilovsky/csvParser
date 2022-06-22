@@ -1,4 +1,11 @@
-﻿"Birth date","First name","Last name",Weight
-1970-01-01,John,Smith,81.5
-1975-01-31,Jane,Doe,61.1
-1988-11-28,Bob,Big,102.4
+﻿"Birth date","First name","Last name",Weight,"Birth date","First name","Last name",Weight
+1970-01-31,"Joh,n",Smith,81.5,1970-01-31,"Joh,n",Smith,81.5
+1975-01-31,Jane,Doe,61.1,1975-01-31,Jane,Doe,61.1
+1988-11-28,Bob,Big,102.4,1988-11-28,Bob,Big,102.4
+1988-11-28,Bob,Big,102.4,1988-11-28,Bob,Big,102.4
+1988-11-28,Bob,Big,102.4,1988-11-28,Bob,Big,102.4
+1988-11-28,Bob,Big,102.4,1988-11-28,Bob,Big,102.4
+1988-11-28,Bob,Big,102.4,1988-11-28,Bob,Big,102.4
+1988-11-28,Bob,Big,223,1988-11-28,Bob,Big,102.4
+1988-11-28,Bob,Big,102.4,1988-11-28,Bob,Big,102.4
+1988-11-28,Bob,Big,122.4,1988-11-28,Bob,Big,102.4

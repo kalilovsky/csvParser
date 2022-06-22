@@ -3,6 +3,7 @@
 namespace Classe;
 
 use Exception;
+use Classe\Utils;
 
 class MetaDataParser
 {
@@ -63,6 +64,7 @@ class MetaDataParser
      */
     public function parseMetaDataFromFile(string $path): void
     {
+        if (!Utils::fileExist($path)) throw new Exception('Le fichier de métadonnées n\'existe pas.' . PHP_EOL);
         if (($handle = fopen($path, "r", true)) !== FALSE) {
             while (($data = fgetcsv($handle, 0, ",")) !== FALSE) {
                 $this->setMetaData($data);
@@ -82,6 +84,6 @@ class MetaDataParser
      */
     public function getStrLenByLine(): int
     {
-        return ($this->strLenByLine + 1);
+        return ($this->strLenByLine);
     }
 }
